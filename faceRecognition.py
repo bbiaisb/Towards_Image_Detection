@@ -8,12 +8,4 @@ def faceDetection(img):
         cv.rectangle(img, (x, y), (x + w, y + h), (255, 255, 255), 2)
     cv.imshow('img', img)
     cv.waitKey()
-<<<<<<< HEAD
     cv.destroyAllWindows()
-=======
-    cv.destroyAllWindows()
-
-img = cv.imread("test.jpg")
-
-faceDetection(img)
->>>>>>> 9ed9cb303de570eca2955bc3cfb3f534d51b433e
