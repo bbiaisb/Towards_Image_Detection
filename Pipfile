@@ -8,6 +8,7 @@ verify_ssl = true
 [packages]
 numpy = "*"
 opencv-python = "*"
+scikit-image = "*"
 
 [requires]
 python_version = "3.7"

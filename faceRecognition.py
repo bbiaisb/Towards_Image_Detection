@@ -9,3 +9,4 @@ def faceDetection(img):
     cv.imshow('img', img)
     cv.waitKey()
     cv.destroyAllWindows()
+
