@@ -3,9 +3,9 @@ import cv2
 import numpy as np
 
 
-def measureSimilarities():
-    before = cv2.imread('test.jpg')
-    after = cv2.imread('test_edit2.jpg')
+def measureSimilarities(img1, img2):
+    before = cv2.imread(img1)
+    after = cv2.imread(img2)
 
     before_gray = cv2.cvtColor(before, cv2.COLOR_BGR2GRAY)
     after_gray = cv2.cvtColor(after, cv2.COLOR_BGR2GRAY)
@@ -40,5 +40,3 @@ def measureSimilarities():
     cv2.destroyAllWindows()
     print("done")
 
-
-measureSimilarities()
