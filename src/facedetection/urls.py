@@ -16,10 +16,16 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 
-from pages.views import home_view, contact_view
+from django.conf import settings
+from django.conf.urls.static import static
+
+from pages.views import home_view, contact_view, about_view, model_form_upload
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', home_view, name="home"),
-    path('contact/', contact_view)
-]
+    path('contact/', contact_view),
+    path('about/', about_view),
+    path('upload', model_form_upload),
+] + static(settings.MEDIA_URL, document_root= settings.MEDIA_ROOT)
+

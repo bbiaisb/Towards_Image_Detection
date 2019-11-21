@@ -1,12 +1,13 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Face Detection App</title>
-</head>
-<body>
-<h1>Face Detection App</h1>
-<p>Check your images for privacy.</p>
+{% extends 'base.html' %}
 
-</body>
-</html>
+{% block content %}
+
+
+<p>
+    Upload your images here:
+</p>
+
+<img src="{{ media/documents/test.png }}" alt="test">
+
+
+{% endblock %}

@@ -9,6 +9,7 @@ verify_ssl = true
 numpy = "*"
 opencv-python = "*"
 django = "*"
+pillow = "*"
 
 [requires]
 python_version = "3.7"

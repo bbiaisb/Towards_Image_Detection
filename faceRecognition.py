@@ -10,6 +10,3 @@ def faceDetection(img):
     cv.waitKey()
     cv.destroyAllWindows()
 
-img = cv.imread("test.jpg")
-
-faceDetection(img)
