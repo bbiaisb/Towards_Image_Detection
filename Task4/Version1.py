@@ -40,5 +40,3 @@ def measureSimilarities(img1, img2):
     cv2.destroyAllWindows()
     print("done")
 
-
-measureSimilarities("test.jpg", "test_edit2.jpg")
