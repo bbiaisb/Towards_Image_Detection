@@ -17,3 +17,7 @@ for (x, y, w, h) in faces:
 cv2.imwrite('edited_'+img_name,img)
 cv2.imshow('img',img)
 cv2.waitKey()
+
+# img = cv.imread("test.jpg")
+
+# faceDetection(img)
