@@ -58,7 +58,7 @@ class BetterFaceDetection(FaceDetectionBaseline):
 
     def __init__(self):
 
-        # super().__init__()
+# super().__init__()/
     def rectangle_faces(self, faces, input_image):
         for (x, y, w, h) in faces:
             cv2.rectangle(input_image.img, (x, y), (x + w, y + h), (255, 0, 0), 2)
@@ -78,15 +78,15 @@ class BetterFaceDetection(FaceDetectionBaseline):
         input_image.show()
         cv2.waitKey()
 
-class FoolSecurity(BetterFaceDetection):
-    def __int__(self):
-        # self.classifier_eyes
-
-    def black_eyes(self, eyes):                         #Idea: intensity reduce => Eye getting black
-        new_img = []
-        for (ex, ey, ew, eh) in eyes:
-            ex, ey, ew, eh += random.randient()
-
+# class FoolSecurity(BetterFaceDetection):
+#     def __int__(self):
+#         # self.classifier_eyes
+#
+#     def black_eyes(self, eyes):                         #Idea: intensity reduce => Eye getting black
+#         new_img = []
+#         for (ex, ey, ew, eh) in eyes:
+#             ex, ey, ew, eh += random.randient()
+#
 
             #how can I calculate a hole matrix and append it as well.
             #shouldn't be a matrix any more -> gray!
@@ -130,3 +130,6 @@ def main(file_path):
 # all classes in one file or should I split?
 #how can I get the coordinates
 #how can I put extend tho image-> wrong path...
+
+
+print(Image.coordinates("test.jpg"))

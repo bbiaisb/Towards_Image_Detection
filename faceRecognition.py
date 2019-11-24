@@ -9,8 +9,12 @@ def faceDetection(img):
     cv.imshow('img_2', img)
     cv.waitKey()
     cv.destroyAllWindows()
+    print(gray, img_2)
 
 
 img = cv.imread("test.jpg")
 img_2 = cv.imread("Haruki_Murakami.jpg")
 faceDetection(img_2)
+# print(type(img_2))
+
+# print(faceDetection(img))
