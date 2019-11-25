@@ -3,8 +3,10 @@ from flask import render_template, request, redirect
 from app import app
 from werkzeug.utils import secure_filename
 
-from faceRecognition import faceDetection
+from faceRecognition7 import faceDetection
 import cv2 as cv
+from PIL import Image
+
 app.config["IMAGE_UPLOADS"] = "Task7/app/static/img"
 app.config["ALLOWED_IMAGE_EXTENSIONS"] = ["JPEG", "JPG", "PNG", "GIF"]
 
@@ -64,6 +66,8 @@ def upload_image():
                 image.save(os.path.join(app.config["IMAGE_UPLOADS"], filename))
 
                 filename = "img/"+filename
+
+                print(filename)
 
                 return render_template('edit_image.html', title='Editor', filename=filename)
 

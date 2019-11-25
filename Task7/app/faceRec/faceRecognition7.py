@@ -1,4 +1,5 @@
 import cv2 as cv
+from PIL import Image
 
 def faceDetection(img):
     img_2 = cv.imread("Haruki_Murakami.jpg")
@@ -11,6 +12,9 @@ def faceDetection(img):
     #cv.waitKey()
     #cv.destroyAllWindows()
     cv.imwrite("Haru_2.jpg", img)
+    im = Image.open("Haru_2.jpg")
+    im.show()
+
     return cv.imwrite("Haru_2.jpg", img)
 
 
