@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>
+        {% block title %}
+        {% if title %}{{ title }} - Face Detection {% else %}Face Detection App{% endif %}
+        {% endblock %}
+    </title>
+    <link href="styles.css" type="text/css" rel="stylesheet">
+</head>
+<body>
+
+<nav class="navbar">
+  <ul>
+      <li>Home</li>
+      <li>About</li>
+  </ul>
+</nav>
+
+
+{% block content %}
+{% endblock %}
+
+</body>
+</html>

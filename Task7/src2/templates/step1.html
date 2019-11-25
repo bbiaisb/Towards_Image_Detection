@@ -1,11 +1,17 @@
 {% extends 'base.html' %}
 
 {% block content %}
+
+<h1>Step 1</h1>
+<h3>Upload your Image</h3>
+
   <form method="post" enctype="multipart/form-data">
     {% csrf_token %}
     {{ form.as_p }}
     <button type="submit">Upload</button>
   </form>
+
+<img src='{{ MEDIA_URL }}{{ imagefile }}'>
 
   <p><a href="{% url 'home' %}">Return to home</a></p>
 {% endblock %}

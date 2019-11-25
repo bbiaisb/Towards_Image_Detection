@@ -10,6 +10,10 @@ numpy = "*"
 opencv-python = "*"
 django = "*"
 pillow = "*"
+flask = "*"
+python-dotenv = "*"
+flask-bootstrap = "*"
+flask-nav = "*"
 
 [requires]
 python_version = "3.7"
