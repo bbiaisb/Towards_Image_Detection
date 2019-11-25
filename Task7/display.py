@@ -1,5 +1,5 @@
 import cv2 as cv
-from faceRecognition import faceDetection
+from Task7.faceRecognition import faceDetection
 
 img = cv.imread("test.jpg")
 

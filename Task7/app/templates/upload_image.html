@@ -1,30 +1,25 @@
-{% block title %} Upload {% endblock %}
+{% extends "base.html" %}
 
-{% block main %}
+{% block content %}
+<head>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
 
-<div class="container">
-  <div class="row">
-    <div class="col">
 
-      <h1>Upload an image</h1>
-      <hr>
+<h1 class="title">/image upload</h1>
 
-      <form action="/upload-image" method="POST" enctype="multipart/form-data">
+<form action="/upload-image" method="POST" enctype="multipart/form-data">
 
-        <div class="form-group">
-          <label>Select image</label>
-          <div class="custom-file">
-            <input type="file" class="custom-file-input" name="image" id="image">
-            <label class="custom-file-label" for="image">Select image...</label>
-          </div>
-        </div>
-
-        <button type="submit" class="btn btn-primary">Upload</button>
-
-      </form>
-
+  <div class="form-group">
+    <div class="custom-file">
+      <input type="file" class="btn custom-file-input" name="image" id="image">
+      <!-- <label class="btn" for="image">1  Select image...</label> -->
     </div>
   </div>
-</div>
+
+  <button type="submit" class="btn">upload</button>
+
+</form>
+
 
 {% endblock %}
