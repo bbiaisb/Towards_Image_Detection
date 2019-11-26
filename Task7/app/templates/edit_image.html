@@ -1,0 +1,43 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<head>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+<!--
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+    <script type=text/javascript>
+            $(function() {
+              $('a#test').bind('click', function() {
+                $.getJSON('/background_process_test',
+                    function(data) {
+                  //do nothing
+                });
+                return false;
+              });
+            });
+    </script>
+-->
+</head>
+<body>
+
+<h1 class="title">/editor</h1>
+    <p>Here you find your image to edit:</p>
+
+    <div class="parent">
+        <div class="item-bar">
+                <a href="edit-image"><p class="item" id="test">Face</p></a>
+                <a href="edit-image"><p class="item">Blur</p></a>
+                <a href="edit-image"><p class="item">XXX</p></a>
+        </div>
+        <img src="{{ url_for('static', filename=filename) }}" class="editor-image">
+        <p>{{ image }}</p>
+    </div>
+
+    <br><br>
+    <a href="upload-image" class="btn">download image</a>
+
+</body>
+</html>
+
+{% endblock %}
