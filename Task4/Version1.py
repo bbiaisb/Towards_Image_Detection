@@ -7,12 +7,18 @@ def measureSimilarities(img1, img2):
     before = cv2.imread(img1)
     after = cv2.imread(img2)
 
+    """
+    changing color to gray to measure differences better
+    comparing images with skimage function
+    diff contains the image differences
+    
+    """
+
     before_gray = cv2.cvtColor(before, cv2.COLOR_BGR2GRAY)
     after_gray = cv2.cvtColor(after, cv2.COLOR_BGR2GRAY)
 
     (score, diff) = compare_ssim(before_gray, after_gray, full=True)
     print("Image similarity", score)
-
     diff = (diff * 255).astype("uint8")
 
     thresh = cv2.threshold(diff, 0, 255, cv2.THRESH_BINARY_INV | cv2.THRESH_OTSU)[1]
@@ -40,3 +46,4 @@ def measureSimilarities(img1, img2):
     cv2.destroyAllWindows()
     print("done")
 
+measureSimilarities("test.jpg", "test_edit2.jpg")
