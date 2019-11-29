@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<head>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+
+    <h1 class="title">/faceDetector 101</h1>
+    <p>Welcome to faceDetector101. Upload any file you wish to check for faces.</p>
+    <br>
+    <a href="upload-image" class="btn">start uploading</a>
+
+{% endblock %}
