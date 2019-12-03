@@ -3,11 +3,9 @@ from flask import render_template, request, redirect
 from app import app
 from werkzeug.utils import secure_filename
 
-from app.faceRec.faceRecognition7 import faceDetection
+from app.faceRec.faceRecognition7 import face_detection
 import cv2 as cv
 from PIL import Image
-
-filename="img/ayla.jpg"
 
 app.config["IMAGE_UPLOADS"] = "Task7/app/static/img"
 app.config["ALLOWED_IMAGE_EXTENSIONS"] = ["JPEG", "JPG", "PNG", "GIF"]
@@ -42,18 +40,23 @@ def about():
 
 @app.route('/edit-image')
 def edit_image():
+    try:
+        if num > 1:
+            num += 0
+    except:
+        num = 1
+
     filepath = filename.split("/")[-1:][0]
-    print(os.path.join(app.config["IMAGE_UPLOADS"])+"/ayla.jpg")
-    img = cv.imread(os.path.join(app.config["IMAGE_UPLOADS"])+"/ayla.jpg", 0)
 
-    cv.imwrite(os.path.join(app.config["IMAGE_UPLOADS"])+"/result.jpg", img)
+    img = cv.imread(os.path.join(app.config["IMAGE_UPLOADS"])+"/"+filepath, 0)
 
+    img_2 = face_detection(img)
 
-    #faceDetection(filepath)
+    cv.imwrite(os.path.join(app.config["IMAGE_UPLOADS"])+"/"+str(num)+".jpg", img_2)
 
-    #print(output)
-    #new_filename = output
-    new_filename = filename
+    new_filename = "img/"+str(num)+".jpg"
+    num += 1
+
 
     return render_template('edit_image.html', title='Editor', filename=filename, new_filename=new_filename)
 
@@ -77,14 +80,10 @@ def upload_image():
 
                 image.save(os.path.join(app.config["IMAGE_UPLOADS"], filename))
 
-                #print(os.path.join(app.config["IMAGE_UPLOADS"]))
-
                 filename = "img/"+filename
+                # new_filename = "img/"+secure_filename(image.filename)
+                new_filename = filename[:]
 
-                new_filename = "img/"+secure_filename(image.filename)
-
-                # print(new_filename)
-                # print(filename)
 
                 return render_template('edit_image.html', title='Editor', filename=filename, new_filename=new_filename)
 

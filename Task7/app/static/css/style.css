@@ -90,6 +90,20 @@ li {
     margin-right: 30px;
 }
 
+.desc-bar {
+    width: 200px;
+    height: 300px;
+    margin-right: 20px;
+}
+
+.desc-item {
+    font-size: 16px;
+    height: 60px;
+    width: 200px;
+    text-align: right;
+    margin-top: 30px;
+}
+
 .item {
     font-size: 20px;
     border: 2px solid #ffffff;
