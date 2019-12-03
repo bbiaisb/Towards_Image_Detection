@@ -102,3 +102,9 @@ li {
     border-color: #E16B2E;
     color: #E16B2E;
 }
+
+
+.editor-image {
+    width: 400px;
+    height: 100%;
+}

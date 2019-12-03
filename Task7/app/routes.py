@@ -3,10 +3,11 @@ from flask import render_template, request, redirect
 from app import app
 from werkzeug.utils import secure_filename
 
-# from faceRecognition7 import faceDetection
+from app.faceRec.faceRecognition7 import faceDetection
 import cv2 as cv
 from PIL import Image
 
+filename="img/ayla.jpg"
 
 app.config["IMAGE_UPLOADS"] = "Task7/app/static/img"
 app.config["ALLOWED_IMAGE_EXTENSIONS"] = ["JPEG", "JPG", "PNG", "GIF"]
@@ -41,10 +42,20 @@ def about():
 
 @app.route('/edit-image')
 def edit_image():
-    img = cv.imread(filename)
-    # output = faceDetection(img)
-    # cv.imshow('img_2', output)
-    return render_template('edit_image.html', title='Editor', filename=filename)
+    filepath = filename.split("/")[-1:][0]
+    print(os.path.join(app.config["IMAGE_UPLOADS"])+"/ayla.jpg")
+    img = cv.imread(os.path.join(app.config["IMAGE_UPLOADS"])+"/ayla.jpg", 0)
+
+    cv.imwrite(os.path.join(app.config["IMAGE_UPLOADS"])+"/result.jpg", img)
+
+
+    #faceDetection(filepath)
+
+    #print(output)
+    #new_filename = output
+    new_filename = filename
+
+    return render_template('edit_image.html', title='Editor', filename=filename, new_filename=new_filename)
 
 
 @app.route("/upload-image", methods=["GET", "POST"])
@@ -64,14 +75,18 @@ def upload_image():
             if allowed_image(image.filename):
                 filename = secure_filename(image.filename)
 
-                # image.save(os.path.join(app.config["IMAGE_UPLOADS"], filename))
-                print(os.path.join(app.config["IMAGE_UPLOADS"]))
+                image.save(os.path.join(app.config["IMAGE_UPLOADS"], filename))
+
+                #print(os.path.join(app.config["IMAGE_UPLOADS"]))
 
                 filename = "img/"+filename
 
-                print(filename)
+                new_filename = "img/"+secure_filename(image.filename)
 
-                return render_template('edit_image.html', title='Editor', filename=filename)
+                # print(new_filename)
+                # print(filename)
+
+                return render_template('edit_image.html', title='Editor', filename=filename, new_filename=new_filename)
 
             else:
                 print("That file extension is not allowed")
