@@ -37,6 +37,36 @@ def index():
 def about():
     return render_template('about.html', title='About')
 
+@app.route("/upload-image", methods=["GET", "POST"])
+def upload_image():
+
+    if request.method == "POST":
+
+        if request.files:
+
+            image = request.files["image"]
+
+            if image.filename == "":
+                print("No filename")
+                return redirect(request.url)
+
+            if allowed_image(image.filename):
+                global filename
+                filename = secure_filename(image.filename)
+
+                image.save(os.path.join(app.config["IMAGE_UPLOADS"], filename))
+
+                filename = "img/"+filename
+                # new_filename = "img/"+secure_filename(image.filename)
+                filenames = [filename, filename[:]]
+
+                return render_template('edit_image.html', title='Editor', filename=filenames)
+
+            else:
+                print("That file extension is not allowed")
+                return redirect(request.url)
+
+    return render_template("upload_image.html", title='Upload')
 
 @app.route('/edit-image')
 def edit_image():
@@ -57,39 +87,8 @@ def edit_image():
     new_filename = "img/"+str(num)+".jpg"
     num += 1
 
+    filenames = [filename, new_filename]
+    print(filenames)
 
-    return render_template('edit_image.html', title='Editor', filename=filename, new_filename=new_filename)
-
-
-@app.route("/upload-image", methods=["GET", "POST"])
-def upload_image():
-    global filename
-
-    if request.method == "POST":
-
-        if request.files:
-
-            image = request.files["image"]
-
-            if image.filename == "":
-                print("No filename")
-                return redirect(request.url)
-
-            if allowed_image(image.filename):
-                filename = secure_filename(image.filename)
-
-                image.save(os.path.join(app.config["IMAGE_UPLOADS"], filename))
-
-                filename = "img/"+filename
-                # new_filename = "img/"+secure_filename(image.filename)
-                new_filename = filename[:]
-
-
-                return render_template('edit_image.html', title='Editor', filename=filename, new_filename=new_filename)
-
-            else:
-                print("That file extension is not allowed")
-                return redirect(request.url)
-
-    return render_template("upload_image.html", title='Upload')
+    return render_template('edit_image.html', title='Editor', filename=filenames)
 

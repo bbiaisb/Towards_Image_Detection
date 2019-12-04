@@ -31,16 +31,17 @@
             <p class="desc-item">some more functionality</p>
         </div>
         <div class="item-bar">
-                <a href="edit-image"><p class="item" id="test">Face</p></a>
+                <a href="edit-image"><p class="item"><img src="./static/svg/meh-rolling-eyes.svg" class="svg_edit"></p></a>
                 <a href="edit-image"><p class="item">Blur</p></a>
                 <a href="edit-image"><p class="item">XXX</p></a>
         </div>
-        <img src="{{ url_for('static', filename=filename) }}" class="editor-image">
-        <img src="{{ url_for('static', filename=new_filename) }}" class="editor-image">
+        <img src="{{ url_for('static', filename=filename[0]) }}" class="editor-image">
+        <img src="{{ url_for('static', filename=filename[1]) }}" class="editor-image">
     </div>
 
     <br><br>
-    <a href="upload-image" class="btn">download image</a>
+    <a href="{{ url_for('static', filename=filename[1]) }}" class="btn" download=""><img src="./static/svg/download.svg" class="svg">download image</a>
+    <a href="upload-image" class="btn" id="another-btn"><img src="./static/svg/upload.svg" class="svg"> upload another image</a>
 
 </body>
 </html>
