@@ -52,12 +52,12 @@ def upload_image():
 
             if allowed_image(image.filename):
                 global filename
+
                 filename = secure_filename(image.filename)
 
                 image.save(os.path.join(app.config["IMAGE_UPLOADS"], filename))
 
                 filename = "img/"+filename
-                # new_filename = "img/"+secure_filename(image.filename)
                 filenames = [filename, filename[:]]
 
                 return render_template('edit_image.html', title='Editor', filename=filenames)
@@ -67,6 +67,7 @@ def upload_image():
                 return redirect(request.url)
 
     return render_template("upload_image.html", title='Upload')
+
 
 @app.route('/edit-image')
 def edit_image():
