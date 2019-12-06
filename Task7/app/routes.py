@@ -5,7 +5,8 @@ from werkzeug.utils import secure_filename
 from random import randint
 
 
-from app.faceRec.faceRecognition import face_detection
+from app.functions.faceRecognition import face_detection
+from app.functions.faceBlur import face_blur
 import cv2 as cv
 from PIL import Image
 
@@ -87,8 +88,6 @@ def edit_image():
     except:
         num = 1
 
-    print("Oh dear"+filename)
-
     filepath = filename.split("/")[-1:][0]
 
     img = cv.imread(os.path.join(app.config["IMAGE_UPLOADS"])+"/"+filepath, 0)
@@ -103,5 +102,29 @@ def edit_image():
     filenames = [filename[:], new_filename[:]]
     print(filenames)
 
-    return render_template('edit_image_face.html', title='Editor', filename=filenames[:])
+    return render_template('edit_image.html', title='Editor', filename=filenames[:])
 
+
+@app.route('/edit-image-blur')
+def edit_image_blur():
+    try:
+        if num > 1:
+            num += 0
+    except:
+        num = 1
+
+    filepath = filename.split("/")[-1:][0]
+
+    img = cv.imread(os.path.join(app.config["IMAGE_UPLOADS"])+"/"+filepath, 0)
+
+    img = face_blur(img)
+
+    cv.imwrite(os.path.join(app.config["IMAGE_UPLOADS"])+"/"+str(num)+".jpg", img)
+
+    new_filename = "img/"+str(num)+".jpg"
+    num += 1
+
+    filenames = [filename[:], new_filename[:]]
+    print(filenames)
+
+    return render_template('edit_image.html', title='Editor', filename=filenames[:])

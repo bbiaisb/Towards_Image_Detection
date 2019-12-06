@@ -107,14 +107,28 @@ li {
 .item {
     font-size: 20px;
     border: 2px solid #ffffff;
+    border-radius: 5px;
     height: 60px;
     width: 60px;
     line-height: 60px;
+
+    cursor: pointer;
+  text-align: center;
+  text-decoration: none;
+  outline: none;
+  box-shadow: 0 9px #999;
 }
 
 .item:hover {
     border-color: #E16B2E;
     color: #E16B2E;
+}
+
+.item:active {
+    background-color: #E16B2E;
+    box-shadow: 0 5px #666;
+    transform: translateY(4px);
+    color: #ffffff;
 }
 
 

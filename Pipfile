@@ -8,13 +8,13 @@ verify_ssl = true
 [packages]
 numpy = "*"
 opencv-python = "*"
-django = "*"
 pillow = "*"
 flask = "*"
 python-dotenv = "*"
 flask-bootstrap = "*"
 flask-nav = "*"
 matplotlib = "*"
+skimage = "*"
 
 [requires]
 python_version = "3.7"
