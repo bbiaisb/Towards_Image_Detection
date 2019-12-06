@@ -8,18 +8,6 @@ def face_detection(img):
     #gray = cv.cvtColor(img, cv.COLOR_BGR2GRAY)
     faces = face_cascade.detectMultiScale(img, 1.1, 4)
     for (x, y, w, h) in faces:
-        cv.rectangle(img, (x, y), (x + w, y + h), (225, 107, 46), 5)
-
-    #cv.imshow('img_2', img)
-    #cv.waitKey()
-    #cv.destroyAllWindows()
-
-    #cv.imwrite("face.jpg", img)
-    #im = Image.open("Haru_2.jpg")
-
-
+        cv.rectangle(img, (x, y), (x + w, y + h), (220, 100, 46), 10)
 
     return img
-
-
-

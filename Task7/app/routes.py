@@ -2,8 +2,10 @@ import os
 from flask import render_template, request, redirect
 from app import app
 from werkzeug.utils import secure_filename
+from random import randint
 
-from app.faceRec.faceRecognition7 import face_detection
+
+from app.faceRec.faceRecognition import face_detection
 import cv2 as cv
 from PIL import Image
 
@@ -37,6 +39,12 @@ def index():
 def about():
     return render_template('about.html', title='About')
 
+
+@app.errorhandler(404)
+def page_not_found(error):
+    return render_template('page_not_found.html'), 404
+
+
 @app.route("/upload-image", methods=["GET", "POST"])
 def upload_image():
 
@@ -53,12 +61,14 @@ def upload_image():
             if allowed_image(image.filename):
                 global filename
 
-                filename = secure_filename(image.filename)
+                filename = str(randint(999, 10000))+secure_filename(image.filename)
 
                 image.save(os.path.join(app.config["IMAGE_UPLOADS"], filename))
 
                 filename = "img/"+filename
                 filenames = [filename, filename[:]]
+
+                print(filenames)
 
                 return render_template('edit_image.html', title='Editor', filename=filenames)
 
@@ -77,19 +87,21 @@ def edit_image():
     except:
         num = 1
 
+    print("Oh dear"+filename)
+
     filepath = filename.split("/")[-1:][0]
 
     img = cv.imread(os.path.join(app.config["IMAGE_UPLOADS"])+"/"+filepath, 0)
 
-    img_2 = face_detection(img)
+    img = face_detection(img)
 
-    cv.imwrite(os.path.join(app.config["IMAGE_UPLOADS"])+"/"+str(num)+".jpg", img_2)
+    cv.imwrite(os.path.join(app.config["IMAGE_UPLOADS"])+"/"+str(num)+".jpg", img)
 
     new_filename = "img/"+str(num)+".jpg"
     num += 1
 
-    filenames = [filename, new_filename]
+    filenames = [filename[:], new_filename[:]]
     print(filenames)
 
-    return render_template('edit_image.html', title='Editor', filename=filenames)
+    return render_template('edit_image_face.html', title='Editor', filename=filenames[:])
 

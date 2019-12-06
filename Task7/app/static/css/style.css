@@ -119,8 +119,13 @@ li {
 
 
 .editor-image {
-    width: 400px;
-    height: 100%;
+    height: 400px;
+    /*width: 400px;
+    height: 100%;*/
+}
+
+#editor-arrow {
+    height: 400px;
 }
 
 #another-btn {

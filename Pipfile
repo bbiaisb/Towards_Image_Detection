@@ -14,6 +14,7 @@ flask = "*"
 python-dotenv = "*"
 flask-bootstrap = "*"
 flask-nav = "*"
+matplotlib = "*"
 
 [requires]
 python_version = "3.7"

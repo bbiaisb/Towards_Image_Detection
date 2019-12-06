@@ -1,5 +1,6 @@
 import cv2 as cv
 
+
 def faceDetection(img_2):
     # img_2 = cv.imread("Haruki_Murakami.jpg")
     face_cascade = cv.CascadeClassifier('haarcascade_frontalface_default.xml')
