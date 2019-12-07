@@ -98,25 +98,24 @@ li {
 
 .desc-item {
     font-size: 16px;
-    height: 60px;
+    height: 55px;
     width: 200px;
     text-align: right;
-    margin-top: 30px;
+    margin-top: 20px;
 }
 
 .item {
     font-size: 20px;
     border: 2px solid #ffffff;
     border-radius: 5px;
-    height: 60px;
-    width: 60px;
+    height: 50px;
+    width: 50px;
     line-height: 60px;
-
     cursor: pointer;
-  text-align: center;
-  text-decoration: none;
-  outline: none;
-  box-shadow: 0 9px #999;
+    text-align: center;
+    text-decoration: none;
+    outline: none;
+    box-shadow: 0 9px #999;
 }
 
 .item:hover {
@@ -131,11 +130,8 @@ li {
     color: #ffffff;
 }
 
-
 .editor-image {
     height: 400px;
-    /*width: 400px;
-    height: 100%;*/
 }
 
 #editor-arrow {
@@ -153,5 +149,5 @@ li {
 
 .svg_edit {
     margin-top: 7px;
-    height: 45px;
+    height: 35px;
 }

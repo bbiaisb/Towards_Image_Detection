@@ -1,14 +1,15 @@
 import os
+import cv2 as cv
 from flask import render_template, request, redirect
-from app import app
 from werkzeug.utils import secure_filename
 from random import randint
 
+from app import app
 
 from app.functions.faceRecognition import face_detection
 from app.functions.faceBlur import face_blur
-import cv2 as cv
-from PIL import Image
+from app.functions.eyeRecognition import faceRecognition_improve
+
 
 app.config["IMAGE_UPLOADS"] = "Task7/app/static/img"
 app.config["ALLOWED_IMAGE_EXTENSIONS"] = ["JPEG", "JPG", "PNG", "GIF"]
@@ -60,16 +61,16 @@ def upload_image():
                 return redirect(request.url)
 
             if allowed_image(image.filename):
-                global filename
+                global filename, filename_new, filename_initial
 
-                filename = str(randint(999, 10000))+secure_filename(image.filename)
+                filename = str(randint(999, 10000))+"_"+secure_filename(image.filename)
 
                 image.save(os.path.join(app.config["IMAGE_UPLOADS"], filename))
 
                 filename = "img/"+filename
-                filenames = [filename, filename[:]]
-
-                print(filenames)
+                filename_initial = filename[:]
+                filename_new = filename
+                filenames = [filename, filename_new]
 
                 return render_template('edit_image.html', title='Editor', filename=filenames)
 
@@ -82,11 +83,7 @@ def upload_image():
 
 @app.route('/edit-image')
 def edit_image():
-    try:
-        if num > 1:
-            num += 0
-    except:
-        num = 1
+    global filename, filename_new
 
     filepath = filename.split("/")[-1:][0]
 
@@ -94,19 +91,49 @@ def edit_image():
 
     img = face_detection(img)
 
-    cv.imwrite(os.path.join(app.config["IMAGE_UPLOADS"])+"/"+str(num)+".jpg", img)
+    cv.imwrite(os.path.join(app.config["IMAGE_UPLOADS"])+"/face_"+filepath, img)
 
-    new_filename = "img/"+str(num)+".jpg"
-    num += 1
+    filename_new = "img/face_"+filepath
 
-    filenames = [filename[:], new_filename[:]]
-    print(filenames)
+    filenames = [filename, filename_new]
 
-    return render_template('edit_image.html', title='Editor', filename=filenames[:])
+    return render_template('edit_image.html', title='Editor', filename=filenames)
 
 
 @app.route('/edit-image-blur')
 def edit_image_blur():
+    global filename, filename_new
+
+    filepath = filename.split("/")[-1:][0]
+
+    img = cv.imread(os.path.join(app.config["IMAGE_UPLOADS"])+"/"+filepath, 0)
+
+    img = face_blur(img)
+
+    cv.imwrite(os.path.join(app.config["IMAGE_UPLOADS"])+"/blur_"+filepath, img)
+
+    filename_new = "img/blur_"+filepath
+
+    filenames = [filename, filename_new]
+
+    print(filenames)
+
+    return render_template('edit_image.html', title='Editor', filename=filenames)
+
+
+@app.route('/edit-image-swap')
+def edit_image_swap():
+    global filename, filename_new
+
+    (filename_new, filename) = (filename, filename_new)
+
+    filenames = [filename, filename_new]
+
+    return render_template('edit_image.html', title='Editor', filename=filenames)
+
+
+@app.route('/edit-image-eyes')
+def edit_image_eyes():
     try:
         if num > 1:
             num += 0
@@ -117,7 +144,7 @@ def edit_image_blur():
 
     img = cv.imread(os.path.join(app.config["IMAGE_UPLOADS"])+"/"+filepath, 0)
 
-    img = face_blur(img)
+    #img = faceRecognition_improve(img)
 
     cv.imwrite(os.path.join(app.config["IMAGE_UPLOADS"])+"/"+str(num)+".jpg", img)
 
@@ -128,3 +155,14 @@ def edit_image_blur():
     print(filenames)
 
     return render_template('edit_image.html', title='Editor', filename=filenames[:])
+
+
+@app.route('/edit-image-back')
+def edit_image_back():
+    global filename, filename_new, filename_initial
+    filename = filename_initial
+    filename_new = filename_initial
+
+    filenames = [filename, filename_new]
+
+    return render_template('edit_image.html', title='Editor', filename=filenames)

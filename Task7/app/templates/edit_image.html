@@ -4,21 +4,6 @@
 
 <head>
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
-<!--
-    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
-    <script type=text/javascript>
-            $(function() {
-              $('a#test').bind('click', function() {
-                $.getJSON('/background_process_test',
-                    function(data) {
-                  //do nothing
-                });
-                return false;
-              });
-            });
-    </script>
--->
-
 </head>
 <body>
 
@@ -27,17 +12,23 @@
 
     <div class="parent">
         <div class="desc-bar">
-            <p class="desc-item">detect faces in your image</p>
+            <p class="desc-item">detect faces</p>
             <p class="desc-item">blur the image</p>
-            <p class="desc-item">some more functionality</p>
+            <p class="desc-item">detect eyes</p>
+            <p class="desc-item">measure similarities</p>
+            <p class="desc-item">reset image</p>
         </div>
         <div class="item-bar">
                 <a href="edit-image"><p class="item"><img src="./static/svg/meh-rolling-eyes.svg" class="svg_edit"></p></a>
-                <a href="edit-image-blur"><p class="item">Blur</p></a>
-                <a href="edit-image"><p class="item">XXX</p></a>
+                <a href="edit-image-blur"><p class="item"><img src="./static/svg/stroopwafel.svg" class="svg_edit"></p></a>
+                <a href="edit-image-eyes"><p class="item">EYE</p></a>
+                <a href="edit-image-eyes"><p class="item">XXX</p></a>
+                <a href="edit-image-back"><p class="item"><img src="./static/svg/history.svg" class="svg_edit"></p></a>
         </div>
         <img src="{{ url_for('static', filename=filename[0]) }}" class="editor-image">
-        <img src="./static/svg/arrow.png" id="editor-arrow">
+
+        <a href="edit-image-swap"><img src="./static/svg/arrow.png" id="editor-arrow"></a>
+
         <img src="{{ url_for('static', filename=filename[1]) }}" class="editor-image">
     </div>
 
