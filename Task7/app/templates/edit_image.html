@@ -1,3 +1,4 @@
+
 {% extends "base.html" %}
 
 {% block content %}
@@ -5,10 +6,9 @@
 <head>
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
 </head>
+
 <body>
-
 <h1 class="title">/editor</h1>
-
     <div class="parent">
         <div class="desc-bar">
             <p class="desc-item">detect faces</p>
@@ -24,22 +24,17 @@
                 <a href="edit-image-eyes"><p class="item">XXX</p></a>
                 <a href="edit-image-back"><p class="item"><img src="./static/svg/history.svg" class="svg_edit"></p></a>
         </div>
-
         <div class="image-container">
             <img src="{{ url_for('static', filename=filename[0]) }}" class="editor-image">
 
-            <a href="edit-image-swap"><img src="./static/svg/arrow.png" id="editor-arrow"></a>
+            <a href="edit-image-swap"><div id="editor-arrow"> <!--src="./static/svg/arrow.png"--> </div></a>
 
             <img src="{{ url_for('static', filename=filename[1]) }}" class="editor-image">
         </div>
     </div>
-
     <br><br>
     <a href="{{ url_for('static', filename=filename[1]) }}" class="btn" download=""><img src="./static/svg/download.svg" class="svg">download image</a>
     <a href="upload-image" class="btn" id="another-btn"><img src="./static/svg/upload.svg" class="svg"> upload another image</a>
-
 </body>
-
-</html>
 
 {% endblock %}

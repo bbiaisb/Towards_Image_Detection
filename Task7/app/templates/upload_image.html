@@ -1,6 +1,8 @@
+
 {% extends "base.html" %}
 
 {% block content %}
+
 <head>
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
 </head>
@@ -15,11 +17,10 @@
     </div>
   </div>
 
-  <button type="submit" class="btn"><img src="./static/svg/upload.svg" class="svg">upload</button>
+  <button type="submit" class="btn"><img src="./static/svg/upload.svg" class="svg" alt="upload">upload</button>
 
 <p>{{ error }}</p>
 
 </form>
-
 
 {% endblock %}

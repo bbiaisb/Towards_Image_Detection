@@ -144,7 +144,16 @@ li {
 }
 
 #editor-arrow {
-    height: 400px;
+    height: 420px;
+    width: 60px;
+    background-image: url("../svg/arrow.png");
+    background-position: center; /* Center the image */
+    background-repeat: no-repeat; /* Do not repeat the image */
+    background-size: cover;
+}
+
+#editor-arrow:hover {
+    background-image: url("../svg/arrow_orange.png");
 }
 
 #another-btn {
