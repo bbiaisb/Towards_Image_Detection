@@ -1,7 +1,7 @@
 import os
 import cv2 as cv
 import shutil
-from flask import render_template, request, redirect
+from flask import render_template, request
 from werkzeug.utils import secure_filename
 from random import randint
 
@@ -13,22 +13,6 @@ from app.functions.faceBlur import face_blur
 
 app.config["IMAGE_UPLOADS"] = "Task7/app/static/img"
 app.config["ALLOWED_IMAGE_EXTENSIONS"] = ["JPEG", "JPG", "PNG", "GIF"]
-
-
-def allowed_image(filename):
-
-    # We only want files with a . in the filename
-    if not "." in filename:
-        return False
-
-    # Split the extension from the filename
-    ext = filename.rsplit(".", 1)[1]
-
-    # Check if the extension is in ALLOWED_IMAGE_EXTENSIONS
-    if ext.upper() in app.config["ALLOWED_IMAGE_EXTENSIONS"]:
-        return True
-    else:
-        return False
 
 
 @app.route('/')
@@ -44,11 +28,17 @@ def about():
 
 @app.errorhandler(404)
 def page_not_found(error):
-    return render_template('page_not_found.html'), 404
+    return render_template('page_not_found.html', title='404'), 404
 
 
 @app.route("/upload-image", methods=["GET", "POST"])
 def upload_image():
+    """Display the uploaded image.
+
+    If the upload form gets submitted with the "POST" method, check whether the
+    provided file is valid, and if so delete all previously uploaded images, create
+    a new filename and save the image to the "IMAGE_UPLOADS" path.
+    """
 
     if request.method == "POST":
 
@@ -86,17 +76,21 @@ def upload_image():
 
 @app.route('/edit-image-face')
 def edit_image_face():
+    """Apply face detection to the currently displayed image.
+
+    Read the current image, on which the face_detection function imported from
+    app/functions/faceRecognition.py needs to be applied. Then save that image
+    with the prefix "face_" and display it.
+    """
     global filename, filename_new
 
     filepath = filename.split("/")[-1:][0]
-
     img = cv.imread(os.path.join(app.config["IMAGE_UPLOADS"])+"/"+filepath, 0)
 
     img = face_detection(img)
 
     cv.imwrite(os.path.join(app.config["IMAGE_UPLOADS"])+"/face_"+filepath, img)
     filename_new = "img/face_" + filepath
-
     filenames = [filename, filename_new]
 
     return render_template('edit_image.html', title='Editor', filename=filenames)
@@ -104,17 +98,21 @@ def edit_image_face():
 
 @app.route('/edit-image-blur')
 def edit_image_blur():
+    """Apply blurring to the currently displayed image.
+
+    Read the current image, on which the face_blur function imported from
+    app/functions/faceBlur.py needs to be applied. Then save that image
+    with the prefix "blur_" and display it.
+    """
     global filename, filename_new
 
     filepath = filename.split("/")[-1:][0]
-
     img = cv.imread(os.path.join(app.config["IMAGE_UPLOADS"])+"/"+filepath, 0)
 
     img = face_blur(img)
 
     cv.imwrite(os.path.join(app.config["IMAGE_UPLOADS"])+"/blur_"+filepath, img)
     filename_new = "img/blur_"+filepath
-
     filenames = [filename, filename_new]
 
     return render_template('edit_image.html', title='Editor', filename=filenames)
@@ -122,10 +120,10 @@ def edit_image_blur():
 
 @app.route('/edit-image-swap')
 def edit_image_swap():
+    """Swap the currently displayed images."""
     global filename, filename_new
 
     (filename_new, filename) = (filename, filename_new)
-
     filenames = [filename, filename_new]
 
     return render_template('edit_image.html', title='Editor', filename=filenames)
@@ -153,10 +151,29 @@ def edit_image_eyes():
 
 @app.route('/edit-image-back')
 def edit_image_back():
-    global filename, filename_new, filename_initial
-    filename = filename_initial
-    filename_new = filename_initial
+    """Reset the image to the initially uploaded image.
 
-    filenames = [filename, filename_new]
+    Get and display the gobal variable filename_initial that has been set during the upload.
+    """
+    global filename_initial
+
+    filenames = [filename_initial, filename_initial]
 
     return render_template('edit_image.html', title='Editor', filename=filenames)
+
+
+def allowed_image(filename):
+    """Check if the user uploads a valid image.
+
+    The provided file should have an extension that is in the
+    defined ALLOWED_IMAGE_EXTENSIONS list.
+    """
+    if "." not in filename:
+        return False
+
+    ext = filename.rsplit(".", 1)[1]
+
+    if ext.upper() in app.config["ALLOWED_IMAGE_EXTENSIONS"]:
+        return True
+    else:
+        return False
