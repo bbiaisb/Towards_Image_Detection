@@ -130,8 +130,17 @@ li {
     color: #ffffff;
 }
 
-.editor-image {
+.image-container {
+    display:flex;
     height: 400px;
+    max-width: 800px;
+
+}
+
+.editor-image, #editor-arrow {
+    margin:auto;
+    max-width: 400px;
+    max-height: 400px;
 }
 
 #editor-arrow {

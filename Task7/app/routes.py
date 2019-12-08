@@ -1,5 +1,6 @@
 import os
 import cv2 as cv
+import shutil
 from flask import render_template, request, redirect
 from werkzeug.utils import secure_filename
 from random import randint
@@ -57,11 +58,14 @@ def upload_image():
             image = request.files["image"]
 
             if image.filename == "":
-                print("No filename")
-                return redirect(request.url)
+                error_msg = "Please provide a file for upload."
+                return render_template("upload_image.html", title='Upload', error=error_msg)
 
             if allowed_image(image.filename):
                 global filename, filename_new, filename_initial
+
+                shutil.rmtree('Task7/app/static/img')
+                os.makedirs('Task7/app/static/img')
 
                 filename = str(randint(999, 10000))+"_"+secure_filename(image.filename)
 
@@ -75,14 +79,14 @@ def upload_image():
                 return render_template('edit_image.html', title='Editor', filename=filenames)
 
             else:
-                print("That file extension is not allowed")
-                return redirect(request.url)
+                error_msg = "Sorry, that file extension is not allowed."
+                return render_template("upload_image.html", title='Upload', error=error_msg)
 
     return render_template("upload_image.html", title='Upload')
 
 
-@app.route('/edit-image')
-def edit_image():
+@app.route('/edit-image-face')
+def edit_image_face():
     global filename, filename_new
 
     filepath = filename.split("/")[-1:][0]
@@ -92,8 +96,7 @@ def edit_image():
     img = face_detection(img)
 
     cv.imwrite(os.path.join(app.config["IMAGE_UPLOADS"])+"/face_"+filepath, img)
-
-    filename_new = "img/face_"+filepath
+    filename_new = "img/face_" + filepath
 
     filenames = [filename, filename_new]
 
@@ -111,12 +114,9 @@ def edit_image_blur():
     img = face_blur(img)
 
     cv.imwrite(os.path.join(app.config["IMAGE_UPLOADS"])+"/blur_"+filepath, img)
-
     filename_new = "img/blur_"+filepath
 
     filenames = [filename, filename_new]
-
-    print(filenames)
 
     return render_template('edit_image.html', title='Editor', filename=filenames)
 
@@ -134,27 +134,22 @@ def edit_image_swap():
 
 @app.route('/edit-image-eyes')
 def edit_image_eyes():
-    try:
-        if num > 1:
-            num += 0
-    except:
-        num = 1
+    global filename, filename_new
 
     filepath = filename.split("/")[-1:][0]
 
-    img = cv.imread(os.path.join(app.config["IMAGE_UPLOADS"])+"/"+filepath, 0)
+    img = cv.imread(os.path.join(app.config["IMAGE_UPLOADS"]) + "/" + filepath, 0)
 
-    #img = faceRecognition_improve(img)
+    img = faceRecognition_improve(img)
 
-    cv.imwrite(os.path.join(app.config["IMAGE_UPLOADS"])+"/"+str(num)+".jpg", img)
+    cv.imwrite(os.path.join(app.config["IMAGE_UPLOADS"]) + "/eye_" + filepath, img)
+    filename_new = "img/eye_" + filepath
 
-    new_filename = "img/"+str(num)+".jpg"
-    num += 1
+    filenames = [filename, filename_new]
 
-    filenames = [filename[:], new_filename[:]]
     print(filenames)
 
-    return render_template('edit_image.html', title='Editor', filename=filenames[:])
+    return render_template('edit_image.html', title='Editor', filename=filenames)
 
 
 @app.route('/edit-image-back')

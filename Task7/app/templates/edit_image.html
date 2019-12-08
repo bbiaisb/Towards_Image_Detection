@@ -8,7 +8,6 @@
 <body>
 
 <h1 class="title">/editor</h1>
-    <p>Here you find your image to edit:</p>
 
     <div class="parent">
         <div class="desc-bar">
@@ -19,17 +18,20 @@
             <p class="desc-item">reset image</p>
         </div>
         <div class="item-bar">
-                <a href="edit-image"><p class="item"><img src="./static/svg/meh-rolling-eyes.svg" class="svg_edit"></p></a>
+                <a href="edit-image-face"><p class="item"><img src="./static/svg/meh-rolling-eyes.svg" class="svg_edit"></p></a>
                 <a href="edit-image-blur"><p class="item"><img src="./static/svg/stroopwafel.svg" class="svg_edit"></p></a>
                 <a href="edit-image-eyes"><p class="item">EYE</p></a>
                 <a href="edit-image-eyes"><p class="item">XXX</p></a>
                 <a href="edit-image-back"><p class="item"><img src="./static/svg/history.svg" class="svg_edit"></p></a>
         </div>
-        <img src="{{ url_for('static', filename=filename[0]) }}" class="editor-image">
 
-        <a href="edit-image-swap"><img src="./static/svg/arrow.png" id="editor-arrow"></a>
+        <div class="image-container">
+            <img src="{{ url_for('static', filename=filename[0]) }}" class="editor-image">
 
-        <img src="{{ url_for('static', filename=filename[1]) }}" class="editor-image">
+            <a href="edit-image-swap"><img src="./static/svg/arrow.png" id="editor-arrow"></a>
+
+            <img src="{{ url_for('static', filename=filename[1]) }}" class="editor-image">
+        </div>
     </div>
 
     <br><br>
