@@ -9,7 +9,7 @@ from app import app
 
 from app.functions.faceRecognition import face_detection
 from app.functions.faceBlur import face_blur
-from app.functions.eyeRecognition import faceRecognition_improve
+#from app.functions.eyeRecognition import faceRecognition_improve
 
 
 app.config["IMAGE_UPLOADS"] = "Task7/app/static/img"
