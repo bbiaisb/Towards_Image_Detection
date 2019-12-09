@@ -3,7 +3,10 @@ import cv2
 import numpy as np
 
 
-def measureSimilarities(img1, img2):
+def measureSimilarities(before, after):
+
+    print(before)
+    print(after)
 
     """
     img_temp = cv2.imread(img2)
@@ -14,7 +17,7 @@ def measureSimilarities(img1, img2):
     dim = (width, height)
     # resize image
     img2 = cv2.resize(img_temp, dim, interpolation=cv2.INTER_AREA)
-    """
+    
 
     try:
         before = cv2.imread(img1)
@@ -24,6 +27,7 @@ def measureSimilarities(img1, img2):
         after = cv2.imread(img2)
     except:
         after = img2
+    """
 
 
     if before.shape[1] != after.shape[1] or before.shape[0] != after.shape[0]:
@@ -33,12 +37,12 @@ def measureSimilarities(img1, img2):
         after = cv2.resize(after, dim, interpolation=cv2.INTER_AREA)
 
 
-    before_gray = cv2.cvtColor(before, cv2.COLOR_BGR2GRAY) #changing color to gray to measure differences better (cv2.threshold)
-    after_gray = cv2.cvtColor(after, cv2.COLOR_BGR2GRAY)
+    #before_gray = cv2.cvtColor(before, cv2.COLOR_BGR2GRAY) #changing color to gray to measure differences better (cv2.threshold)
+    #after_gray = cv2.cvtColor(after, cv2.COLOR_BGR2GRAY)
 
 
-    (score, diff) = compare_ssim(before_gray, after_gray, full=True) #comparing images with skimage function (Structural Similarity Index (SSIM) -> degregation of the image)
-    print("Image similarity: ", score)
+    (score, diff) = compare_ssim(before, after, full=True) #comparing images with skimage function (Structural Similarity Index (SSIM) -> degregation of the image)
+
     diff = (diff * 255).astype("uint8") #diff contains the differences of the image
 
 
@@ -58,7 +62,7 @@ def measureSimilarities(img1, img2):
             area = cv2.contourArea(c)
             contourImg = cv2.contourArea(cI)
             if area == contourImg:
-                return print("Both images have no significant similarities!")
+                return "Both images have no significant similarities!"
             else:
                 for c in contours: #drawing the contours around the differences
                     area = cv2.contourArea(c)
@@ -68,30 +72,7 @@ def measureSimilarities(img1, img2):
                         cv2.rectangle(after, (x, y), (x + w, y + h), (36, 255, 12), 2)
                         cv2.drawContours(mask, [c], 0, (0, 255, 0), -1)
                         cv2.drawContours(filled_after, [c], 0, (0, 255, 0), -1)
+    # before & after
+    return str(score)
 
 
-                cv2.imshow('before', before)
-                cv2.imshow('after', after)
-                #cv2.imshow('diff', diff)
-                #cv2.imshow('mask', mask)
-                #cv2.imshow('filled after', filled_after)
-
-    print("done")
-    cv2.waitKey(0)
-    cv2.destroyAllWindows()
-
-#img = cv2.imread("test_edit2.jpg", cv2.IMREAD_UNCHANGED)
-
-"""
-scale_percent = 60 # percent of original size
-width = int(img.shape[1] * scale_percent / 100)
-height = int(img.shape[0] * scale_percent / 100)
-dim = (width, height)
-# resize image
-resized = cv2.resize(img, dim, interpolation = cv2.INTER_AREA)
-
-cv2.imshow("resized:", resized)
-"""
-
-
-measureSimilarities("test.jpg", "test_edit2.jpg")

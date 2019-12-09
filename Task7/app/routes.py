@@ -6,9 +6,10 @@ from werkzeug.utils import secure_filename
 from random import randint
 
 from app import app
-
 from app.functions.faceRecognition import face_detection
 from app.functions.faceBlur import face_blur
+# from app.functions.task3_faceRecognition import *
+from app.functions.task4_measureSimilarities import measureSimilarities
 
 
 app.config["IMAGE_UPLOADS"] = "Task7/app/static/img"
@@ -39,7 +40,6 @@ def upload_image():
     provided file is valid, and if so delete all previously uploaded images, create
     a new filename and save the image to the "IMAGE_UPLOADS" path.
     """
-
     if request.method == "POST":
 
         if request.files:
@@ -68,7 +68,7 @@ def upload_image():
                 return render_template('edit_image.html', title='Editor', filename=filenames)
 
             else:
-                error_msg = "Sorry, that file extension is not allowed."
+                error_msg = "Sorry, that file extension is not allowed. \n Try JPEG, JPG, PNG or GIF."
                 return render_template("upload_image.html", title='Upload', error=error_msg)
 
     return render_template("upload_image.html", title='Upload')
@@ -89,7 +89,12 @@ def edit_image_face():
 
     img = face_detection(img)
 
+    #image = Task3FaceDetection(img)
+
+    #image.faceRecognition()
+
     cv.imwrite(os.path.join(app.config["IMAGE_UPLOADS"])+"/face_"+filepath, img)
+
     filename_new = "img/face_" + filepath
     filenames = [filename, filename_new]
 
@@ -120,7 +125,7 @@ def edit_image_blur():
 
 @app.route('/edit-image-swap')
 def edit_image_swap():
-    """Swap the currently displayed images."""
+    """Swap the two currently displayed images."""
     global filename, filename_new
 
     (filename_new, filename) = (filename, filename_new)
@@ -137,7 +142,7 @@ def edit_image_eyes():
 
     img = cv.imread(os.path.join(app.config["IMAGE_UPLOADS"]) + "/" + filepath, 0)
 
-    img = faceRecognition_improve(img)
+    #img = faceRecognition_improve(img)
 
     cv.imwrite(os.path.join(app.config["IMAGE_UPLOADS"]) + "/eye_" + filepath, img)
     filename_new = "img/eye_" + filepath
@@ -149,15 +154,34 @@ def edit_image_eyes():
     return render_template('edit_image.html', title='Editor', filename=filenames)
 
 
+@app.route('/edit-image-similarities')
+def edit_image_similarities():
+    global filename, filename_new
+
+    filepath = filename.split("/")[-1:][0]
+    filepath_new = filename_new.split("/")[-1:][0]
+
+    before = cv.imread(os.path.join(app.config["IMAGE_UPLOADS"]) + "/" + filepath, 0)
+    after = cv.imread(os.path.join(app.config["IMAGE_UPLOADS"]) + "/" + filepath_new, 0)
+
+    output = "The similarity score is: " + measureSimilarities(before, after)
+
+    filenames = [filename, filename_new]
+
+    return render_template('edit_image.html', title='Editor', filename=filenames, score_text=output)
+
+
 @app.route('/edit-image-back')
 def edit_image_back():
     """Reset the image to the initially uploaded image.
 
     Get and display the gobal variable filename_initial that has been set during the upload.
     """
-    global filename_initial
+    global filename, filename_new, filename_initial
 
-    filenames = [filename_initial, filename_initial]
+    filename = filename_initial
+    filename_new = filename_initial
+    filenames = [filename, filename_new]
 
     return render_template('edit_image.html', title='Editor', filename=filenames)
 

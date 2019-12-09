@@ -16,6 +16,7 @@ flask-nav = "*"
 matplotlib = "*"
 skimage = "*"
 scikitimage = "*"
+scikit-image = "*"
 
 [requires]
 python_version = "3.7"

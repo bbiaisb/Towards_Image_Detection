@@ -83,8 +83,11 @@ class Image(object):
     # a = classifier.faceRecognition()
 
 
+classifier = FaceDetection("Task7/app/functions/closedeyes_1.jpg")
 
+print(classifier.faceRecognition())
 
+"""
 
 def main(img):
 
@@ -92,6 +95,8 @@ def main(img):
     input_image = Image(img)
     classifier = FaceDetection()
     coordinates = classifier.faceEyeRecognition(input_image)
+    
+    
 
 
 
@@ -104,3 +109,4 @@ if __name__=='__main__':
 
     main(file_path)
 
+"""

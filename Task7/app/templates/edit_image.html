@@ -21,7 +21,7 @@
                 <a href="edit-image-face"><p class="item"><img src="./static/svg/meh-rolling-eyes.svg" class="svg_edit"></p></a>
                 <a href="edit-image-blur"><p class="item"><img src="./static/svg/stroopwafel.svg" class="svg_edit"></p></a>
                 <a href="edit-image-eyes"><p class="item">EYE</p></a>
-                <a href="edit-image-eyes"><p class="item">XXX</p></a>
+                <a href="edit-image-similarities"><p class="item">XXX</p></a>
                 <a href="edit-image-back"><p class="item"><img src="./static/svg/history.svg" class="svg_edit"></p></a>
         </div>
         <div class="image-container">
@@ -33,6 +33,8 @@
         </div>
     </div>
     <br><br>
+    {{ score_text }}
+    <br>
     <a href="{{ url_for('static', filename=filename[1]) }}" class="btn" download="detected_faces"><img src="./static/svg/download.svg" class="svg">download image</a>
     <a href="upload-image" class="btn" id="another-btn"><img src="./static/svg/upload.svg" class="svg"> upload another image</a>
 </body>
