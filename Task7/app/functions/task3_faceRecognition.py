@@ -76,6 +76,6 @@ class Image(object):
         self.classifier = Task3FaceDetection(img)
     # a = classifier.faceRecognition()
 
-image = Task3FaceDetection("closedeyes_1.jpg")
+# image = Task3FaceDetection("closedeyes_1.jpg")
 
-image.faceRecognition()
+# image.faceRecognition()

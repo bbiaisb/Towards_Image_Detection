@@ -6,9 +6,9 @@ from werkzeug.utils import secure_filename
 from random import randint
 
 from app import app
-from app.functions.faceRecognition import face_detection
-from app.functions.faceBlur import face_blur
-# from app.functions.task3_faceRecognition import *
+from app.functions.task1_faceRecognition import face_detection
+from app.functions.task2_faceBlur import face_blur
+from app.functions.task3_faceRecognition import *
 from app.functions.task4_measureSimilarities import measureSimilarities
 
 
@@ -79,7 +79,7 @@ def edit_image_face():
     """Apply face detection to the currently displayed image.
 
     Read the current image, on which the face_detection function imported from
-    app/functions/faceRecognition.py needs to be applied. Then save that image
+    app/functions/task1_faceRecognition.py needs to be applied. Then save that image
     with the prefix "face_" and display it.
     """
     global filename, filename_new
@@ -106,7 +106,7 @@ def edit_image_blur():
     """Apply blurring to the currently displayed image.
 
     Read the current image, on which the face_blur function imported from
-    app/functions/faceBlur.py needs to be applied. Then save that image
+    app/functions/task2_faceBlur.py needs to be applied. Then save that image
     with the prefix "blur_" and display it.
     """
     global filename, filename_new
@@ -156,6 +156,11 @@ def edit_image_eyes():
 
 @app.route('/edit-image-similarities')
 def edit_image_similarities():
+    """Measure the similarity between both images displayed.
+
+    Get the similarity with the measureSimilarities() function and display it
+    as number in score_text.
+    """
     global filename, filename_new
 
     filepath = filename.split("/")[-1:][0]
