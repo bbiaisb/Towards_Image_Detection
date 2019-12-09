@@ -90,6 +90,13 @@ li {
     margin-right: 30px;
 }
 
+.item-bar-right {
+    width: 60px;
+    height: 300px;
+    margin-right: 300px;
+    display: inline-block;
+}
+
 .desc-bar {
     width: 200px;
     height: 300px;
@@ -134,7 +141,6 @@ li {
     display:flex;
     height: 400px;
     max-width: 800px;
-
 }
 
 .editor-image, #editor-arrow {

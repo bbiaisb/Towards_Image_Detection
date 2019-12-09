@@ -8,8 +8,9 @@ from random import randint
 from app import app
 from app.functions.task1_faceRecognition import face_detection
 from app.functions.task2_faceBlur import face_blur
-from app.functions.task3_faceRecognition import *
+from app.functions.task3_eyeRecognition import eye_recognition
 from app.functions.task4_measureSimilarities import measureSimilarities
+from app.functions.task5_faceProtect import face_protect
 
 
 app.config["IMAGE_UPLOADS"] = "Task7/app/static/img"
@@ -53,7 +54,7 @@ def upload_image():
             if allowed_image(image.filename):
                 global filename, filename_new, filename_initial
 
-                shutil.rmtree('Task7/app/static/img')
+                shutil.rmtree('Task7/app/static/img')   # Clear previously uploaded images
                 os.makedirs('Task7/app/static/img')
 
                 filename = str(randint(999, 10000))+"_"+secure_filename(image.filename)
@@ -89,10 +90,6 @@ def edit_image_face():
 
     img = face_detection(img)
 
-    #image = Task3FaceDetection(img)
-
-    #image.faceRecognition()
-
     cv.imwrite(os.path.join(app.config["IMAGE_UPLOADS"])+"/face_"+filepath, img)
 
     filename_new = "img/face_" + filepath
@@ -123,17 +120,6 @@ def edit_image_blur():
     return render_template('edit_image.html', title='Editor', filename=filenames)
 
 
-@app.route('/edit-image-swap')
-def edit_image_swap():
-    """Swap the two currently displayed images."""
-    global filename, filename_new
-
-    (filename_new, filename) = (filename, filename_new)
-    filenames = [filename, filename_new]
-
-    return render_template('edit_image.html', title='Editor', filename=filenames)
-
-
 @app.route('/edit-image-eyes')
 def edit_image_eyes():
     global filename, filename_new
@@ -141,15 +127,11 @@ def edit_image_eyes():
     filepath = filename.split("/")[-1:][0]
 
     img = cv.imread(os.path.join(app.config["IMAGE_UPLOADS"]) + "/" + filepath, 0)
-
-    #img = faceRecognition_improve(img)
-
+    img = eye_recognition(img)
     cv.imwrite(os.path.join(app.config["IMAGE_UPLOADS"]) + "/eye_" + filepath, img)
+
     filename_new = "img/eye_" + filepath
-
     filenames = [filename, filename_new]
-
-    print(filenames)
 
     return render_template('edit_image.html', title='Editor', filename=filenames)
 
@@ -174,6 +156,68 @@ def edit_image_similarities():
     filenames = [filename, filename_new]
 
     return render_template('edit_image.html', title='Editor', filename=filenames, score_text=output)
+
+
+@app.route('/edit-image-face-blur')
+def edit_image_face_blur():
+    """Blur all detected faces."""
+    global filename, filename_new
+
+    filepath = filename.split("/")[-1:][0]
+
+    img = cv.imread(os.path.join(app.config["IMAGE_UPLOADS"]) + "/" + filepath, 0)
+    img = face_protect(img, "blur")
+    cv.imwrite(os.path.join(app.config["IMAGE_UPLOADS"]) + "/face_blur_" + filepath, img)
+    filename_new = "img/face_blur_" + filepath
+
+    filenames = [filename, filename_new]
+
+    return render_template('edit_image.html', title='Editor', filename=filenames)
+
+
+@app.route('/edit-image-face-black')
+def edit_image_face_black():
+    """Draw black square over all detected faces."""
+    global filename, filename_new
+
+    filepath = filename.split("/")[-1:][0]
+
+    img = cv.imread(os.path.join(app.config["IMAGE_UPLOADS"]) + "/" + filepath, 0)
+    img = face_protect(img, "black")
+    cv.imwrite(os.path.join(app.config["IMAGE_UPLOADS"]) + "/face_black_" + filepath, img)
+    filename_new = "img/face_black_" + filepath
+
+    filenames = [filename, filename_new]
+
+    return render_template('edit_image.html', title='Editor', filename=filenames)
+
+
+@app.route('/edit-image-face-truth')
+def edit_image_face_truth():
+    """Draw the truth over all detected faces."""
+    global filename, filename_new
+
+    filepath = filename.split("/")[-1:][0]
+
+    img = cv.imread(os.path.join(app.config["IMAGE_UPLOADS"]) + "/" + filepath, 0)
+    img = face_protect(img, "truth")
+    cv.imwrite(os.path.join(app.config["IMAGE_UPLOADS"]) + "/face_truth_" + filepath, img)
+    filename_new = "img/face_truth_" + filepath
+
+    filenames = [filename, filename_new]
+
+    return render_template('edit_image.html', title='Editor', filename=filenames)
+
+
+@app.route('/edit-image-swap')
+def edit_image_swap():
+    """Swap the two currently displayed images."""
+    global filename, filename_new
+
+    (filename_new, filename) = (filename, filename_new)
+    filenames = [filename, filename_new]
+
+    return render_template('edit_image.html', title='Editor', filename=filenames)
 
 
 @app.route('/edit-image-back')
