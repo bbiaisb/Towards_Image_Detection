@@ -175,6 +175,23 @@ def edit_image_face_blur():
     return render_template('edit_image.html', title='Editor', filename=filenames)
 
 
+@app.route('/edit-image-face-blur-weak')
+def edit_image_face_blur_weak():
+    """Blur all detected faces a little."""
+    global filename, filename_new
+
+    filepath = filename.split("/")[-1:][0]
+
+    img = cv.imread(os.path.join(app.config["IMAGE_UPLOADS"]) + "/" + filepath, 0)
+    img = face_protect(img, "weak")
+    cv.imwrite(os.path.join(app.config["IMAGE_UPLOADS"]) + "/face_blur_weak_" + filepath, img)
+    filename_new = "img/face_blur_weak_" + filepath
+
+    filenames = [filename, filename_new]
+
+    return render_template('edit_image.html', title='Editor', filename=filenames)
+
+
 @app.route('/edit-image-face-black')
 def edit_image_face_black():
     """Draw black square over all detected faces."""
@@ -186,23 +203,6 @@ def edit_image_face_black():
     img = face_protect(img, "black")
     cv.imwrite(os.path.join(app.config["IMAGE_UPLOADS"]) + "/face_black_" + filepath, img)
     filename_new = "img/face_black_" + filepath
-
-    filenames = [filename, filename_new]
-
-    return render_template('edit_image.html', title='Editor', filename=filenames)
-
-
-@app.route('/edit-image-face-truth')
-def edit_image_face_truth():
-    """Draw the truth over all detected faces."""
-    global filename, filename_new
-
-    filepath = filename.split("/")[-1:][0]
-
-    img = cv.imread(os.path.join(app.config["IMAGE_UPLOADS"]) + "/" + filepath, 0)
-    img = face_protect(img, "truth")
-    cv.imwrite(os.path.join(app.config["IMAGE_UPLOADS"]) + "/face_truth_" + filepath, img)
-    filename_new = "img/face_truth_" + filepath
 
     filenames = [filename, filename_new]
 
