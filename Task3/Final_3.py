@@ -33,6 +33,10 @@ class FaceDetection(object):
 
 
     def faceRecognition(self, scaleFactor =1.05, minNeighbors =3):
+        """ Recognised faces and draw a rectangle around it
+        scaleFactor: create a scale-pyramid
+        minNeighbors: increase reliability 
+        """
 
         COLOR_FACE = (255, 0, 255)
         face_cascade = cv2.CascadeClassifier(cv2.data.haarcascades + "haarcascade_frontalface_default.xml")
@@ -47,6 +51,10 @@ class FaceDetection(object):
 
 
     def faceEyeRecognition(self,size = 0.9, scaleFactor =1.08, minNeighbors =6 ):
+        """ Recognised faces only with eyes and draw a rectangle around the face and the eyes
+        scaleFactor: create a scale-pyramid
+        minNeighbors: increase reliability 
+        """
         COLOR_FACE = (255, 0, 255)
         COLOR_EYES = (255, 0, 0)
 
