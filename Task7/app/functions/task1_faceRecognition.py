@@ -7,6 +7,6 @@ def face_detection(img):
     faces = face_cascade.detectMultiScale(img, 1.1, 4)
 
     for (x, y, w, h) in faces:
-        cv.rectangle(img, (x, y), (x + w, y + h), (220, 100, 46), 10)
+        cv.rectangle(img, (x, y), (x + w, y + h), (220, 100, 46), 4)
 
     return img

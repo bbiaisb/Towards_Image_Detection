@@ -1,5 +1,5 @@
 body {
-    margin: 20px 120px;
+    margin: 20px 10px;
     background-color: #121212;
     font-family: "Roboto", "Lucida Grande", "DejaVu Sans", "Bitstream Vera Sans", Verdana, Arial, sans-serif;
     font-size: 20px;
@@ -33,7 +33,7 @@ li {
 }
 
 .top-hr {
-    margin-bottom: 70px;
+    margin: 0px 60px 40px 60px;
 }
 
 .form-group {
@@ -67,10 +67,24 @@ li {
 }
 
 .title {
-    margin-bottom: 60px;
+    margin-bottom: 40px;
     color: #E16B2E;
     font-weight: bold;
     font-size: 50px;
+}
+
+sub-l {
+    font-style: italic;
+    color: #3e3e3e;
+    font-size: 15px;
+    text-align: right;
+}
+
+sub-r {
+    font-style: italic;
+    color: #3e3e3e;
+    font-size: 15px;
+    text-align: left;
 }
 
 .custom-file-input {
@@ -84,24 +98,47 @@ li {
     display: inline-flex;
 }
 
-.item-bar {
-    width: 60px;
+.desc-bar-left {
+    width: 12%;
+    min-width: 160px;;
     height: 300px;
-    margin-right: 30px;
+    margin-right: 10px;
 }
 
-.desc-bar {
-    width: 200px;
+.desc-item-left {
+    font-size: 16px;
+    height: 55px;
+    width: 160px;
+    text-align: right;
+    margin-top: 20px;
+    line-height: 26px;
+}
+
+.item-bar-left {
+    width: 8%;
     height: 300px;
     margin-right: 20px;
 }
 
-.desc-item {
+.item-bar-right {
+    width: 8%;
+    height: 300px;
+    margin-left: 20px;
+}
+
+.desc-bar-right {
+    width: 22%;
+    height: 300px;
+    margin-left: 10px;
+}
+
+.desc-item-right {
     font-size: 16px;
     height: 55px;
-    width: 200px;
-    text-align: right;
+    width: 145px;
+    text-align: left;
     margin-top: 20px;
+    line-height: 26px;
 }
 
 .item {
@@ -133,8 +170,7 @@ li {
 .image-container {
     display:flex;
     height: 400px;
-    max-width: 800px;
-
+    width: 70%;
 }
 
 .editor-image, #editor-arrow {
