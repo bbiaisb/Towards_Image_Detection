@@ -9,7 +9,7 @@ from app import app
 from app.functions.task1_faceRecognition import face_detection
 from app.functions.task2_faceBlur import face_blur
 from app.functions.task3_eyeRecognition import eye_recognition
-from app.functions.task4_measureSimilarities import measureSimilarities
+from app.functions.task4_measureSimilarities import measure_similarities
 from app.functions.task5_faceProtect import face_protect
 
 
@@ -151,28 +151,11 @@ def edit_image_similarities():
     before = cv.imread(os.path.join(app.config["IMAGE_UPLOADS"]) + "/" + filepath, 0)
     after = cv.imread(os.path.join(app.config["IMAGE_UPLOADS"]) + "/" + filepath_new, 0)
 
-    output = "The similarity score is: " + measureSimilarities(before, after)
+    output = "The similarity score is: " + measure_similarities(before, after)
 
     filenames = [filename, filename_new]
 
     return render_template('edit_image.html', title='Editor', filename=filenames, score_text=output)
-
-
-@app.route('/edit-image-face-blur')
-def edit_image_face_blur():
-    """Blur all detected faces."""
-    global filename, filename_new
-
-    filepath = filename.split("/")[-1:][0]
-
-    img = cv.imread(os.path.join(app.config["IMAGE_UPLOADS"]) + "/" + filepath, 0)
-    img = face_protect(img, "blur")
-    cv.imwrite(os.path.join(app.config["IMAGE_UPLOADS"]) + "/face_blur_" + filepath, img)
-    filename_new = "img/face_blur_" + filepath
-
-    filenames = [filename, filename_new]
-
-    return render_template('edit_image.html', title='Editor', filename=filenames)
 
 
 @app.route('/edit-image-face-blur-weak')
@@ -186,6 +169,23 @@ def edit_image_face_blur_weak():
     img = face_protect(img, "weak")
     cv.imwrite(os.path.join(app.config["IMAGE_UPLOADS"]) + "/face_blur_weak_" + filepath, img)
     filename_new = "img/face_blur_weak_" + filepath
+
+    filenames = [filename, filename_new]
+
+    return render_template('edit_image.html', title='Editor', filename=filenames)
+
+
+@app.route('/edit-image-face-blur')
+def edit_image_face_blur():
+    """Blur all detected faces strongly."""
+    global filename, filename_new
+
+    filepath = filename.split("/")[-1:][0]
+
+    img = cv.imread(os.path.join(app.config["IMAGE_UPLOADS"]) + "/" + filepath, 0)
+    img = face_protect(img, "blur")
+    cv.imwrite(os.path.join(app.config["IMAGE_UPLOADS"]) + "/face_blur_" + filepath, img)
+    filename_new = "img/face_blur_" + filepath
 
     filenames = [filename, filename_new]
 
