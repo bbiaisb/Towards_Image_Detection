@@ -8,13 +8,18 @@ def face_protect(img, mean):
 
     for (x, y, w, h) in faces:
         if mean == "blur":
-            img[y:y + h, x:x + w] = cv.GaussianBlur(img[y:y + h, x:x + w], (51, 51), 0)
+            kernel = int(0.55 * w)
+            if kernel % 2 == 0:
+                kernel += 1
+            img[y:y + h, x:x + w] = cv.GaussianBlur(img[y:y + h, x:x + w], (kernel, kernel), 0)
+
+        elif mean == "weak":
+            kernel = int(0.08 * w)
+            if kernel % 2 == 0:
+                kernel += 1
+            img[y:y + h, x:x + w] = cv.GaussianBlur(img[y:y + h, x:x + w], (kernel, kernel), 0)
 
         elif mean == "black":
             img = cv.rectangle(img, (x, y), (x + w, y + h), (0, 0, 0), -1)
-
-        elif mean == "truth":
-            truth = cv.imread("protected_by_truth.png")
-            img[y:y + h, x:x + w] = truth[y:y + h, x:x + w]
 
     return img

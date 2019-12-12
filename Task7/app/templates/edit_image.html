@@ -10,14 +10,14 @@
 <body>
 <h1 class="title">/editor</h1>
     <div class="parent">
-        <div class="desc-bar">
-            <p class="desc-item">detect faces</p>
-            <p class="desc-item">blur the image</p>
-            <p class="desc-item">detect eyes</p>
-            <p class="desc-item">measure similarities</p>
-            <p class="desc-item">reset image</p>
+        <div class="desc-bar-left">
+            <p class="desc-item-left">detect faces <br> <sub-l>[Task 1]</sub-l> </p>
+            <p class="desc-item-left">blur the image <br> <sub-l>[Task 2]</sub-l></p>
+            <p class="desc-item-left">detect eyes <br> <sub-l>[Task 3]</sub-l></p>
+            <p class="desc-item-left">measure similarities <br> <sub-l>[Task 4]</sub-l></p>
+            <p class="desc-item-left">reset image</p>
         </div>
-        <div class="item-bar">
+        <div class="item-bar-left">
                 <a href="edit-image-face"><p class="item"><img src="./static/svg/meh-rolling-eyes.svg" class="svg_edit"></p></a>
                 <a href="edit-image-blur"><p class="item"><img src="./static/svg/stroopwafel.svg" class="svg_edit"></p></a>
                 <a href="edit-image-eyes"><p class="item"><img src="./static/svg/eye.svg" class="svg_edit"></p></a>
@@ -32,9 +32,14 @@
             <img src="{{ url_for('static', filename=filename[1]) }}" class="editor-image">
         </div>
         <div class="item-bar-right">
-                <a href="edit-image-face-blur"><p class="item"><img src="./static/svg/meh-rolling-eyes.svg" class="svg_edit"></p></a>
-                <a href="edit-image-face-black"><p class="item"><img src="./static/svg/stroopwafel.svg" class="svg_edit"></p></a>
-                <a href="edit-image-face-truth"><p class="item"><img src="./static/svg/eye.svg" class="svg_edit"></p></a>
+                <a href="edit-image-face-blur"><p class="item"><img src="./static/svg/thermometer-quarter.svg" class="svg_edit"></p></a>
+                <a href="edit-image-face-blur-weak"><p class="item"><img src="./static/svg/thermometer-half.svg" class="svg_edit"></p></a>
+                <a href="edit-image-face-black"><p class="item"><img src="./static/svg/thermometer-three-quarters.svg" class="svg_edit"></p></a>
+        </div>
+        <div class="desc-bar-right">
+            <p class="desc-item-right">blur faces (strong) <br> <sub-r>[Task 5]</sub-r></p>
+            <p class="desc-item-right">blur faces (weak) <br> <sub-r>[Task 5]</sub-r></p>
+            <p class="desc-item-right">blackout faces <br> <sub-r>[Task 5]</sub-r></p>
         </div>
     </div>
     <br><br>
