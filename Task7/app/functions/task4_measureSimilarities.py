@@ -12,7 +12,11 @@ def measure_similarities(before, after):
 
     (score, diff) = structural_similarity(before, after, full=True)  # comparing images with skimage function (Structural Similarity Index (SSIM) -> degregation of the image)
     diff = (diff * 255).astype("uint8")
-
+    
+    if score >= 0.3:
+        perc_score = round(score, 2)*100
+        return str(int(perc_score))+"%"
+    
     thresh = cv2.threshold(diff, 0, 255, cv2.THRESH_BINARY_INV | cv2.THRESH_OTSU)[1]   # finding the differences
     contours = cv2.findContours(thresh.copy(), cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)   # contours, CHAIN_APPROX_SIMPLE does need less memory
     contours = contours[0] if len(contours) == 2 else contours[1]
@@ -24,12 +28,9 @@ def measure_similarities(before, after):
         for cI in contoursImg:
             area = cv2.contourArea(c)
             contourImg = cv2.contourArea(cI)
-            if score >= 0.3:
-                perc_score = round(score, 2)*100
-                return str(int(perc_score))+"%"
             if area == contourImg:
                 perc_score = round(score, 2) * 100
                 return "Both images have no significant similarities! "+str(int(perc_score)) + "%"
     perc_score = round(score, 2) * 100
 
-    return str(int(perc_score)) + "%"
+    return "There are some minor similarities! " +  str(int(perc_score)) + "%"
